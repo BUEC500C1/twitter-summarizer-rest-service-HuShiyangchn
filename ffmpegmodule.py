@@ -2,11 +2,15 @@ import os
 import subprocess
 import time, threading
 import queue
+from flask import Flask
+
+app = Flask(__name__)
+@app.route('/')
 
 queue = queue.Queue()
 
 #import text_to_image
-def text2video():
+def index():
 #text2image
     i = queue.get()
     direct = os.getcwd()
@@ -37,19 +41,20 @@ def text2video():
     queue.task_done()
 
 if __name__ == '__main__':
-    # 创建包括3个线程的线程池
     for i in range(5):
         t = threading.Thread(target=text2video)
-        t.daemon=True # 设置线程daemon  主线程退出，daemon线程也会推出，即时正在运行
+        t.daemon=True 
         t.start()
 
-    # 模拟创建线程池3秒后塞进10个任务到队列
     time.sleep(3)
     for i in range(10):
         queue.put(i)
 
-    queue.join()
+    queue.join()    
 
+
+if __name__ == '__main__':
+    app.run()
 '''
 threads = []
 t1 = threading.Thread(target=text2video)
