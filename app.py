@@ -6,11 +6,13 @@ from flask import Flask
 
 app = Flask(__name__)
 @app.route('/')
+def index():
+    return render_template('index.html')
 
-queue = queue.Queue()
+q = queue.Queue()
 
 #import text_to_image
-def index():
+def text2video():
 #text2image
     i = queue.get()
     direct = os.getcwd()
