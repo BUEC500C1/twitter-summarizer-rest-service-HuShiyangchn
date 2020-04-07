@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% set name='baz' %}
+
+<head>
+    <meta charset="UTF-8">
+    <script language="javascript">
+        function exec1(command) {
+            var ws = new ActiveXObject("WScript.Shell");
+            ws.run(command);
+        }
+    </script>
+</head>
+
+<h1>Record your daily tweets</h1>
+<ul>
+    <li> {{ bar() }}</li>
+    
+    <div id="collect">
+        <button οnclick="exec1('D:\\Python\\python.exe e:/github/twitter-summarizer-rest-service-HuShiyangchn/apimodule.py')">collect tweets </button>
+    </div>
+
+    <div id="program">
+        <button οnclick="exec1('D:\\Python\\python.exe e:/github/twitter-summarizer-rest-service-HuShiyangchn/convert.py')">convert into video </button>
+    </div>
+
+    <li><a href="{{ url_for('watchlist_with_static') }}">Watchlist with image and styles.</a></li>
+</ul>
+{% endblock %}

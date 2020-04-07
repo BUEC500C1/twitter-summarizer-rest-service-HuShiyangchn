@@ -2,18 +2,19 @@ import os
 import subprocess
 import time, threading
 import queue
-from flask import Flask
+from flask import Flask, render_template, flash, redirect, url_for, Markup
 
 app = Flask(__name__)
-@app.route('/')
-def index():
-    return render_template('index.html')
+app.secret_key = os.getenv('SECRET_KEY', 'secret string')
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 
-q = queue.Queue()
+queue = queue.Queue()
 
 #import text_to_image
 def text2video():
 #text2image
+    convert_message = "Convert to video"
     i = queue.get()
     direct = os.getcwd()
     tweetdir = os.path.join(direct,'tweets')
@@ -38,10 +39,37 @@ def text2video():
     #subprocess.call(convert,shell = True)
 
     #image2video
-    convertvideo = 'ffmpeg -loop 1 -y image2 -i '+ imagepath+'/image%03d.png -vcodec libx264 -r 10 -t 10 tweetdaily.mkv' 
+    convertvideo = 'ffmpeg -loop 1 -y image2 -i '+ imagepath+'/image%03d.png -vcodec libx264 -r 10 -t 10 stastic/tweetdaily.mkv' 
     os.system(convertvideo)
     queue.task_done()
 
+
+@app.route('/watchlist2')
+def watchlist_with_static():
+    return render_template('watchlist_with_static.html')
+
+# register template global function
+@app.template_global()
+def bar():
+    return 'Clik the link blew to create the video.'
+
+@app.route("/")
+def index():
+    return render_template('index.html')
+
+# 404 error handler
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+
+# 500 error handler
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
+
+
+'''
 if __name__ == '__main__':
     for i in range(5):
         t = threading.Thread(target=text2video)
@@ -57,6 +85,7 @@ if __name__ == '__main__':
 
 if __name__ == '__main__':
     app.run()
+'''
 '''
 threads = []
 t1 = threading.Thread(target=text2video)
