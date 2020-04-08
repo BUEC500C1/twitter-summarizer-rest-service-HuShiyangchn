@@ -2,15 +2,59 @@ import os
 import subprocess
 import time, threading
 import queue
-from flask import Flask, render_template, flash, redirect, url_for, Markup
+from flask import Flask, render_template, flash, redirect, url_for, Markup, send_file, send_from_directory
+
+#from flask.restful import reqparse, abort, Api, Resource
+from twassemble import twitter_assemble
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'secret string')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
+#api = restful.Api(app)
 queue = queue.Queue()
 
+'''
+@app.route('/watchlist2')
+def watchlist_with_static():
+    return render_template('watchlist_with_static.html')
+
+# register template global function
+@app.template_global()
+def bar():
+    return 'Clik the link blew to create the video.'
+
+@app.route("/")
+def index():
+    return render_template('index.html')
+
+# 404 error handler
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+
+# 500 error handler
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
+
+'''
+@app.route('/<twittertopic>')
+def download_file(twittertopic):
+    twitter_assemble(twittertopic)
+    directory = os.getcwd().join('static')
+    filename = 'tweetdaily'
+    return send_from_directory(directory, filename, as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+#curl http://127.0.0.1:90/boston
+'''
 #import text_to_image
 def text2video():
 #text2image
@@ -42,31 +86,7 @@ def text2video():
     convertvideo = 'ffmpeg -loop 1 -y image2 -i '+ imagepath+'/image%03d.png -vcodec libx264 -r 10 -t 10 stastic/tweetdaily.mkv' 
     os.system(convertvideo)
     queue.task_done()
-
-
-@app.route('/watchlist2')
-def watchlist_with_static():
-    return render_template('watchlist_with_static.html')
-
-# register template global function
-@app.template_global()
-def bar():
-    return 'Clik the link blew to create the video.'
-
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-# 404 error handler
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('errors/404.html'), 404
-
-
-# 500 error handler
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('errors/500.html'), 500
+'''
 
 
 '''
@@ -82,11 +102,6 @@ if __name__ == '__main__':
 
     queue.join()    
 
-
-if __name__ == '__main__':
-    app.run()
-'''
-'''
 threads = []
 t1 = threading.Thread(target=text2video)
 threads.append(t1)
