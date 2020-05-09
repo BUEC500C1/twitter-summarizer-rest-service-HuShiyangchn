@@ -7,7 +7,7 @@
    Run the flask app then run the first part to generate a video by typying the url.
 ## Result ##
 Run python app.py to start the flask application.
-Then type curl http://127.0.0.1:5000/"username". The application will search for tweets of the "username" and produce the result automatically.</br>
+Then type curl http://0.0.0.0:99/"username". The application will search for tweets of the "username" and produce the result automatically.</br>
 ![image](https://github.com/BUEC500C1/twitter-summarizer-rest-service-HuShiyangchn/blob/master/image/result.png)
 ## Run on AWS ##
 1. Launch the instance with Unbuntu system which has python already. So we don't need to download python. Then download the .pem file.
