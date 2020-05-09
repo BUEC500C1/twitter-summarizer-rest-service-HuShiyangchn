@@ -1,7 +1,7 @@
 import os
 import subprocess
 import time, threading
-import queue
+import Queue
 from flask import Flask, render_template, flash, redirect, url_for, Markup, send_file, send_from_directory
 
 #from flask.restful import reqparse, abort, Api, Resource
@@ -13,7 +13,7 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 #api = restful.Api(app)
-queue = queue.Queue()
+queue = Queue.Queue()
 
 '''
 @app.route('/watchlist2')

@@ -24,4 +24,10 @@ in terminal to link to the instance. Then install pip and virtualenv to create a
     </p>$ lcd "local path of code"
     <p> $ put -r .<p>
     Then we can run the application in ssh:
-    <p>$ nohup python app.py
+    <p>$ nohup python3 app.py&</br>
+    Then we can get the output at nohup.out file.
+    By reading the file we can see the log of running flask service.<br>
+    The snapshot of testing:<br>
+    ![image]()
+    ![image]()
+    ![image]()
