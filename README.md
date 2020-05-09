@@ -28,6 +28,7 @@ in terminal to link to the instance. Then install pip and virtualenv to create a
     Then we can get the output at nohup.out file.
     By reading the file we can see the log of running flask service.<br>
     The snapshot of testing:<br>
+    
     ![image](https://github.com/BUEC500C1/twitter-summarizer-rest-service-HuShiyangchn/blob/modified/image/test.png)
     
     ![image](https://github.com/BUEC500C1/twitter-summarizer-rest-service-HuShiyangchn/blob/modified/image/test1.png)
